@@ -1,9 +1,23 @@
-import React from 'react'
+'use client'
+import React, { useState } from 'react';
 
-function Shop() {
+export default function Home() {
+  const [data, setData] = useState(null);
+
+  const fetchData = async () => {
+    try {
+      const response = await fetch('http://localhost:4000/');
+      const responseData = await response.json();
+      setData(responseData);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  };
+
   return (
-    <div>Shop page</div>
-  )
+    <main className="flex min-h-screen flex-col items-center justify-between p-24">
+      <button onClick={fetchData} style={{backgroundColor: 'red', padding: '5px', border: '1px blue solid', borderRadius: '10px'}}>Press here</button>
+      {data && <p>{data.msg}</p>}
+    </main>
+  );
 }
-
-export default Shop
